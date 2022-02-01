@@ -78,7 +78,6 @@ const carouselData = [
     }
 ]
 
-// <Carousel data={carouselData} />
 function MainLayout() {
     return (
         <div className='flex flex-col bg-gray-900'>

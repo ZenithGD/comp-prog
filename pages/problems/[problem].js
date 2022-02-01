@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import ReactDOM from "react-dom";
 
 import { useRouter } from 'next/router'
 
@@ -12,29 +11,13 @@ import Navbar from '../../components/display/Navbar'
 import OptionDropdown from "../../components/ui/OptionDropdown"
 
 import Editor from '@monaco-editor/react'
+import htmr from 'htmr'
 
-const md = `# Problema nº X
-
-A paragraph with *emphasis* and **strong importance**.
-
-> A block quote with ~strikethrough~ and a URL: https://reactjs.org.
-
-* Lists
-* [ ] todo
-* [x] done
-
-A table:
-
-| Tables   |      Are      |  Cool |
-|----------|:-------------:|------:|
-| col 1 is |  left-aligned | $1600 |
-| col 2 is |    centered   |   $12 |
-| col 3 is | right-aligned |    $1 |
-
-~~~
-hola
-~~~
-`
+const st = `
+<h1 style="font-size: xx-large">Título</h1>
+<p>
+Problema
+</p>`
 
 const mappings = [
     {
@@ -66,6 +49,7 @@ public class Main {
     }
 ]
 
+
 function ProblemLayout() {
 
     const router = useRouter()
@@ -86,11 +70,9 @@ function ProblemLayout() {
     useEffect(() => {
 
         // Consultar al servidor sobre el problema
-        
-        setProbName(`Problema ${problem}`)
-        setProbStatement(md)
 
-        return () => {}
+        setProbName(`Problema ${problem}`)
+        setProbStatement(st)
     }, [problem, probName, probStatement])
 
     return (
@@ -98,17 +80,15 @@ function ProblemLayout() {
             <Navbar />
             <div className="h-full w-full p-10 bg-gray-800">
                 <div className="flex w-full">
-                    <div className="flex-1 p-2 border-4 border-orange-400 m-5">
-                        <ReactMarkdown className="prose" remarkPlugins={[remarkGfm]}>
-                            {`<span style="color: red;">${probStatement}</span>`}
-                        </ReactMarkdown>
+                    <div className="flex-1 p-2 border-4 border-orange-400 m-5 text-white">
+                        {htmr(probStatement)}
                     </div>
 
                     <div className="flex-1 p-2 border-4 border-orange-400 m-5">
                         <div className="py-2">
                             <p className="inline-block mx-2 text-orange-400">Select your language:</p>
-                            <OptionDropdown 
-                                className="inline-block h-10 rounded-md appearance-none outline-orange-400 outline-0 border-2 border-orange-400 px-2 bg-gray-800 text-orange-400" 
+                            <OptionDropdown
+                                className="inline-block h-10 rounded-md appearance-none outline-orange-400 outline-0 border-2 border-orange-400 px-2 bg-gray-800 text-orange-400"
                                 onChange={onChange}
                                 data={mappings}
                             />
