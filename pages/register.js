@@ -26,17 +26,17 @@ function register() {
     return (
         <div className='w-full h-full flex justify-center items-center'>
             <form 
-                className='flex justify-center flex-col gap-4 bg-gray-700 m-28 text-orange-400 rounded-xl'
+                className='flex justify-center flex-col bg-gray-700 m-28 text-orange-400 rounded-xl'
                 onSubmit={handleSubmit}>
                 <div className='p-8'>
-                    <h1 className='font-bold text-xl text-center mb-6'>Registrarse</h1>
-                    <div className='flex justify-center gap-8'>
+                    <h1 className='font-bold text-xl text-center mb-4'>Registrarse</h1>
+                    <div className='flex flex-col justify-center'>
                         <label>
                             <h1 className='my-2'>Nombre de usuario</h1>
                             <input 
                                 type="text" 
                                 placeholder="Usuario"
-                                className='bg-gray-600 p-2 rounded-md' 
+                                className='bg-gray-600 p-2 rounded-md w-full' 
                                 onChange={(e) => {setUsername(e.target.value)}} 
                             />
                         </label>
@@ -45,7 +45,7 @@ function register() {
                             <input 
                                 type="text"
                                 placeholder="foo@bar.com" 
-                                className='bg-gray-600 p-2 rounded-md' 
+                                className='bg-gray-600 p-2 rounded-md w-full' 
                                 onChange={(e) => {setEmail(e.target.value)}} 
                             />
                         </label>

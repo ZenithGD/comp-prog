@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+    font-family: 'Montserrat', sans-serif;
+}
+
 /* Add after pseudo element to p element */
 p:after {
     display:block;
