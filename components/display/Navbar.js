@@ -4,7 +4,7 @@ import NavbarButton from '../ui/NavbarButton'
 
 function Navbar() {
 
-    const [ loggedIn, setLoggedIn ] = useState(true)
+    const [ loggedIn, setLoggedIn ] = useState(false)
 
     console.log(loggedIn)
 

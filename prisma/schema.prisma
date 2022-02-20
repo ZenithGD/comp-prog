@@ -1,129 +1,129 @@
 generator client {
-  provider = "prisma-client-js"
+    provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+    provider = "mysql"
+    url      = env("DATABASE_URL")
 }
 
 model belongs_to {
-  id_user Int
-  id_team Int
-  teams   teams @relation(fields: [id_team], references: [id_team], onUpdate: Restrict, map: "FK_bt_team")
-  users   users @relation(fields: [id_user], references: [id_user], onUpdate: Restrict, map: "FK_bt_user")
+    id_user Int
+    id_team Int
+    teams   teams @relation(fields: [id_team], references: [id_team], onUpdate: Restrict, map: "FK_bt_team")
+    users   users @relation(fields: [id_user], references: [id_user], onUpdate: Restrict, map: "FK_bt_user")
 
-  @@id([id_user, id_team])
-  @@index([id_team], map: "FK_bt_team")
+    @@id([id_user, id_team])
+    @@index([id_team], map: "FK_bt_team")
 }
 
 model category {
-  cat         String        @id @db.VarChar(255)
-  prob_ev_cat prob_ev_cat[]
-  prob_pr_cat prob_pr_cat[]
+    cat         String        @id @db.VarChar(255)
+    prob_ev_cat prob_ev_cat[]
+    prob_pr_cat prob_pr_cat[]
 }
 
 model ev_problems {
-  id_prob     Int           @id @default(autoincrement())
-  p_name      String?       @db.VarChar(255)
-  p_statement String?       @db.LongText
-  p_points    Int?
-  p_date      DateTime?     @db.Date
-  id_ev       Int?
-  events      events?       @relation(fields: [id_ev], references: [id_event], onDelete: Restrict, onUpdate: Restrict, map: "FK_ev_p")
-  prob_ev_cat prob_ev_cat[]
+    id_prob     Int           @id @default(autoincrement())
+    p_name      String?       @db.VarChar(255)
+    p_statement String?       @db.LongText
+    p_points    Int?
+    p_date      DateTime?     @db.Date
+    id_ev       Int?
+    events      events?       @relation(fields: [id_ev], references: [id_event], onDelete: Restrict, onUpdate: Restrict, map: "FK_ev_p")
+    prob_ev_cat prob_ev_cat[]
 
-  @@index([id_ev], map: "FK_ev_p")
+    @@index([id_ev], map: "FK_ev_p")
 }
 
 model ev_solved {
-  id_user     Int
-  id_prob     Int
-  time_s      DateTime    @default(now()) @db.Timestamp(0)
-  pr_problems pr_problems @relation(fields: [id_prob], references: [id_prob], onUpdate: Restrict, map: "FK_ev_s_prob")
-  users       users       @relation(fields: [id_user], references: [id_user], onUpdate: Restrict, map: "FK_ev_s_user")
+    id_user     Int
+    id_prob     Int
+    time_s      DateTime    @default(now()) @db.Timestamp(0)
+    pr_problems pr_problems @relation(fields: [id_prob], references: [id_prob], onUpdate: Restrict, map: "FK_ev_s_prob")
+    users       users       @relation(fields: [id_user], references: [id_user], onUpdate: Restrict, map: "FK_ev_s_user")
 
-  @@id([id_user, id_prob])
-  @@index([id_prob], map: "FK_ev_s_prob")
+    @@id([id_user, id_prob])
+    @@index([id_prob], map: "FK_ev_s_prob")
 }
 
 model events {
-  id_event     Int            @id @default(autoincrement())
-  ev_name      String?        @db.VarChar(255)
-  ev_date      DateTime?      @db.DateTime(0)
-  ev_problems  ev_problems[]
-  participates participates[]
+    id_event     Int            @id @default(autoincrement())
+    ev_name      String?        @db.VarChar(255)
+    ev_date      DateTime?      @db.DateTime(0)
+    ev_problems  ev_problems[]
+    participates participates[]
 }
 
 model participates {
-  id_team  Int
-  id_event Int
-  events   events @relation(fields: [id_event], references: [id_event], onUpdate: Restrict, map: "FK_par_ev")
-  teams    teams  @relation(fields: [id_team], references: [id_team], onUpdate: Restrict, map: "FK_par_team")
+    id_team  Int
+    id_event Int
+    events   events @relation(fields: [id_event], references: [id_event], onUpdate: Restrict, map: "FK_par_ev")
+    teams    teams  @relation(fields: [id_team], references: [id_team], onUpdate: Restrict, map: "FK_par_team")
 
-  @@id([id_team, id_event])
-  @@index([id_event], map: "FK_par_ev")
+    @@id([id_team, id_event])
+    @@index([id_event], map: "FK_par_ev")
 }
 
 model pr_problems {
-  id_prob     Int           @id @default(autoincrement())
-  p_name      String?       @db.VarChar(255)
-  p_statement String?       @db.LongText
-  p_points    Int?
-  p_date      DateTime?     @db.Date
-  ev_solved   ev_solved[]
-  pr_solved   pr_solved[]
-  prob_pr_cat prob_pr_cat[]
+    id_prob     Int           @id @default(autoincrement())
+    p_name      String?       @db.VarChar(255)
+    p_statement String?       @db.LongText
+    p_points    Int?
+    p_date      DateTime?     @db.Date
+    ev_solved   ev_solved[]
+    pr_solved   pr_solved[]
+    prob_pr_cat prob_pr_cat[]
 }
 
 model pr_solved {
-  id_user     Int
-  id_prob     Int
-  time_s      DateTime    @default(now()) @db.Timestamp(0)
-  pr_problems pr_problems @relation(fields: [id_prob], references: [id_prob], onUpdate: Restrict, map: "FK_pr_s_prob")
-  users       users       @relation(fields: [id_user], references: [id_user], onUpdate: Restrict, map: "FK_pr_s_user")
+    id_user     Int
+    id_prob     Int
+    time_s      DateTime    @default(now()) @db.Timestamp(0)
+    pr_problems pr_problems @relation(fields: [id_prob], references: [id_prob], onUpdate: Restrict, map: "FK_pr_s_prob")
+    users       users       @relation(fields: [id_user], references: [id_user], onUpdate: Restrict, map: "FK_pr_s_user")
 
-  @@id([id_user, id_prob])
-  @@index([id_prob], map: "FK_pr_s_prob")
+    @@id([id_user, id_prob])
+    @@index([id_prob], map: "FK_pr_s_prob")
 }
 
 model prob_ev_cat {
-  id_prob     Int
-  cat         String      @db.VarChar(255)
-  category    category    @relation(fields: [cat], references: [cat], onUpdate: Restrict, map: "FK_pec_cat")
-  ev_problems ev_problems @relation(fields: [id_prob], references: [id_prob], onUpdate: Restrict, map: "FK_pec_prob")
+    id_prob     Int
+    cat         String      @db.VarChar(255)
+    category    category    @relation(fields: [cat], references: [cat], onUpdate: Restrict, map: "FK_pec_cat")
+    ev_problems ev_problems @relation(fields: [id_prob], references: [id_prob], onUpdate: Restrict, map: "FK_pec_prob")
 
-  @@id([id_prob, cat])
-  @@index([cat], map: "FK_pec_cat")
+    @@id([id_prob, cat])
+    @@index([cat], map: "FK_pec_cat")
 }
 
 model prob_pr_cat {
-  id_prob     Int
-  cat         String      @db.VarChar(255)
-  category    category    @relation(fields: [cat], references: [cat], onUpdate: Restrict, map: "FK_ppc_cat")
-  pr_problems pr_problems @relation(fields: [id_prob], references: [id_prob], onUpdate: Restrict, map: "FK_ppc_prob")
+    id_prob     Int
+    cat         String      @db.VarChar(255)
+    category    category    @relation(fields: [cat], references: [cat], onUpdate: Restrict, map: "FK_ppc_cat")
+    pr_problems pr_problems @relation(fields: [id_prob], references: [id_prob], onUpdate: Restrict, map: "FK_ppc_prob")
 
-  @@id([id_prob, cat])
-  @@index([cat], map: "FK_ppc_cat")
+    @@id([id_prob, cat])
+    @@index([cat], map: "FK_ppc_cat")
 }
 
 model teams {
-  id_team      Int            @id @default(autoincrement())
-  team_name    String?        @db.VarChar(255)
-  event_points Int?
-  battlecry    String?        @db.Text
-  belongs_to   belongs_to[]
-  participates participates[]
+    id_team      Int            @id @default(autoincrement())
+    team_name    String?        @db.VarChar(255)
+    event_points Int?
+    battlecry    String?        @db.Text
+    belongs_to   belongs_to[]
+    participates participates[]
 }
 
 model users {
-  id_user    Int          @id @default(autoincrement())
-  mail       String?      @db.VarChar(255)
-  bio        String?      @db.LongText
-  user_name  String?      @db.VarChar(255)
-  passwd     String?      @db.VarChar(255)
-  points     Int?
-  belongs_to belongs_to[]
-  ev_solved  ev_solved[]
-  pr_solved  pr_solved[]
+    id_user    Int          @id @default(autoincrement())
+    mail       String?      @db.VarChar(255)
+    bio        String?      @db.LongText
+    user_name  String?      @db.VarChar(255)
+    passwd     String?      @db.VarChar(255)
+    points     Int?
+    belongs_to belongs_to[]
+    ev_solved  ev_solved[]
+    pr_solved  pr_solved[]
 }

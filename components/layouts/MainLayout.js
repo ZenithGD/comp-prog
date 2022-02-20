@@ -7,7 +7,7 @@ export default function Layout({ children }) {
     return (
         <>
             <Navbar />
-            <main className='mt-14 min-h-screen bg-gray-900'>{children}</main>
+            <main className='mt-14 min-h-screen h-full bg-gray-900'>{children}</main>
             <Footer />
         </>
     )

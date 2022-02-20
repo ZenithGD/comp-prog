@@ -12,6 +12,7 @@ import OptionDropdown from "../../components/ui/OptionDropdown"
 
 import Editor from '@monaco-editor/react'
 import htmr from 'htmr'
+import Button from '../../components/ui/Button'
 
 const st = `
 <h1 style="font-size: xx-large">Título</h1>
@@ -67,8 +68,18 @@ function ProblemLayout() {
         setInput(mappings[ev.target.value].sample)
     }
 
-    useEffect(() => {
+    const executeCode = async (e) => {
+        e.preventDefault()
+        await fetch('/api/exec', { 
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({input: input, lang: language})
+        })
+    }
 
+    useEffect(() => {
         // Consultar al servidor sobre el problema
 
         setProbName(`Problema ${problem}`)
@@ -78,7 +89,7 @@ function ProblemLayout() {
     return (
         <>
             <Navbar />
-            <div className="h-full w-full p-10 bg-gray-800">
+            <div className="h-full w-full p-20">
                 <div className="flex w-full">
                     <div className="flex-1 p-2 border-4 border-orange-400 m-5 text-white">
                         {htmr(probStatement)}
@@ -94,13 +105,35 @@ function ProblemLayout() {
                             />
                         </div>
                         <Editor
-                            height="70vh"
+                            height="60vh"
                             theme="vs-dark"
                             language={language}
                             value={input}
                             defaultLanguage={mappings[0].lang}
                             defaultValue={mappings[0].sample}
+                            onChange={(v, e) => {setInput(v)}}
                         />
+                        <div className='flex pt-6 w-full'>
+                            <div className='w-full'>
+                                <Button>
+                                    <p className='text-orange-400'>
+                                        Subir código...
+                                    </p>
+                                </Button>
+                            </div>
+                            <div className='flex gap-4'>
+                                <Button onClick={executeCode}>
+                                    <p className='text-orange-400'>
+                                        Ejecutar
+                                    </p>
+                                </Button>
+                                <Button>
+                                    <p className='text-orange-400'>
+                                        Comprobar
+                                    </p>
+                                </Button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

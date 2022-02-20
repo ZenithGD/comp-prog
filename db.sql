@@ -51,7 +51,8 @@ CREATE TABLE `participates` (
 CREATE TABLE `pr_solved` (
     `id_user` int,
     `id_prob` int,
-    `time_s` timestamp,
+    `date_s` timestamp,
+    `time_millis` int,
     PRIMARY KEY (`id_user`, `id_prob`),
     CONSTRAINT FK_pr_s_user FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`),
     CONSTRAINT FK_pr_s_prob FOREIGN KEY (`id_prob`) REFERENCES `pr_problems` (`id_prob`)
@@ -60,7 +61,8 @@ CREATE TABLE `pr_solved` (
 CREATE TABLE `ev_solved` (
     `id_user` int,
     `id_prob` int,
-    `time_s` timestamp,
+    `date_s` timestamp,
+    `time_millis` int,
     PRIMARY KEY (`id_user`, `id_prob`),
     CONSTRAINT FK_ev_s_user FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`),
     CONSTRAINT FK_ev_s_prob FOREIGN KEY (`id_prob`) REFERENCES `pr_problems` (`id_prob`)
